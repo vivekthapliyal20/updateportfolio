@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Portfolio</title>
+    <link rel="shortcut icon" href="black_logo-1f3d33e8.png" type="image/x-icon">
+
+
+    <style>
+        .text-gradient {
+            /* font-size: 72px; */
+            /* background: -webkit-linear-gradient(#eee, #333); */
+            background: linear-gradient(90deg, #4ca5ff 2.34%, #b673f8 100.78%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .dark {
+            --tw-bg-opacity: 1;
+            background-color: rgb(13 17 23);
+        }
+
+        body {
+            background: black;
+            overflow-x: hidden;
+            font-family: sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        @keyframes bounce {
+
+            0%,
+            100% {
+                transform: translateY(-28%);
+                animation-timing-function: linear;
+            }
+
+            50% {
+                transform: translateX(15%);
+                animation-timing-function: linear;
+            }
+        }
+
+        .animate-bounce {
+            animation: bounce 4s infinite;
+        }
+
+        .footercolor {
+            background-color: rgb(30 48 80);
+        }
+
+        canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: -1;
+
+            @media only screen and (max-width: 600px) {
+                max-height: 580px;
+            }
+        }
+    </style>
+
+    <link rel="stylesheet" href="index-0b17151f.css">
+</head>
+
+<body>
+
+    <!-- Space -->
+    <script src="three.min.js"></script>
+    <script>
+        let scene, camera, renderer, stars, starGeo;
+
+        function init() {
+
+            scene = new THREE.Scene();
+
+            camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 1000);
+            camera.position.z = 1;
+            camera.rotation.x = Math.PI / 2;
+
+            renderer = new THREE.WebGLRenderer();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            document.body.appendChild(renderer.domElement);
+
+            starGeo = new THREE.Geometry();
+            for (let i = 0; i < 6000; i++) {
+                star = new THREE.Vector3(
+                    Math.random() * 700 - 300,
+                    Math.random() * 700 - 300,
+                    Math.random() * 700 - 300
+                );
+                star.velocity = 0;
+                star.acceleration = 0.02;
+                starGeo.vertices.push(star);
+            }
+
+            let sprite = new THREE.TextureLoader().load('star.png');
+            let starMaterial = new THREE.PointsMaterial({
+                color: 0xaaaaaa,
+                size: 0.7,
+                map: sprite
+            });
+
+            stars = new THREE.Points(starGeo, starMaterial);
+            scene.add(stars);
+
+            window.addEventListener("resize", onWindowResize, false);
+
+            animate();
+        }
+        function onWindowResize() {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        }
+        function animate() {
+            starGeo.vertices.forEach(p => {
+                p.velocity += p.acceleration
+                p.y -= p.velocity;
+
+                if (p.y < -200) {
+                    p.y = 200;
+                    p.velocity = 0;
+                }
+            });
+            starGeo.verticesNeedUpdate = true;
+            stars.rotation.y += 0.002;
+
+            renderer.render(scene, camera);
+            requestAnimationFrame(animate);
+        }
+        init();
+    </script>
+
+    <!-- header -->
+    <header class="flex justify-center">
+        <div class="w-[1400px] flex justify-between items-center lg:mx-10 md:mx-8 sm:mx-5 mx-4 my-2">
+            <!-- Portfolio logo -->
+            <div class=" lg:w-[100px] lg:h-[80px]  md:w-[80px] md:h-[60px] sm:w-[60px] sm:h-[40px] w-[50px] h-[30px]">
+                <img src="white_logo1-40df8505.png" alt="">
+            </div>
+
+            <!-- details section -->
+            <div
+                class="lg:text-[18px] md:text-[15.4px] sm:text-[11.6px] text-[9.28px] font-bold hidden md:flex items-center gap-6">
+                <!-- Home -->
+                <div class="text-white hover:text-blue-600 duration-700">Home</div>
+                <!-- About me -->
+                <div class="text-white hover:text-blue-600 duration-700"><a href="#aboutme-section"> About me</a></div>
+                <!-- projects -->
+                <div class="text-white hover:text-blue-600 duration-700"><a href="#project-section"> Projects</a></div>
+                <!-- skills -->
+                <div class="text-white hover:text-blue-600 duration-700"> <a href="#skill-section"> Skills</a></div>
+                <!-- contact me -->
+                <div class="text-white hover:text-blue-600 duration-700"><a href="#contactme-section">Contact Me</a>
+                </div>
+            </div>
+
+
+            <div class="md:hidden items-center">
+                <button class="text-white">
+                    <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Section -->
+    <main class="flex justify-center">
+        <div
+            class="lg:mt-28 md:mt-22 sm:mt-18 mt-16 lg:mx-14 md:mx-12 sm:mx-10 mx-7  w-[1400px] lg:flex md:flex sm:flex-row flex-row lg:justify-between md:justify-between sm:justify-center justify-center items-center">
+
+
+            <!-- Left Side Section -->
+            <div class="">
+                <!-- intro -->
+                <div
+                    class="lg:leading-[65px] md:leading-[50px] sm:leading-[35px] leading-[28px] text-white lg:text-[55px] md:text-[45px] sm:text-[35.2px] text-[28px] font-bold ">
+                    Hi, I'm Vivek Thapliyal</div>
+                <!-- profile -->
+                <!-- bg-inherit-gradient-to-r from-indigo-500 -->
+                <div
+                    class="lg:leading-[65px] md:leading-[50px] sm:leading-[35px] leading-[28px] text-white lg:text-[48px] md:text-[37px] sm:text-[28.2px] text-[22px] font-bold ">
+                    <span class="text-gradient"> Frontend
+                        Developer </span>
+                </div>
+                <!-- about -->
+                <div class="lg:leading-[29px] md:leading-[22px] sm:leading-[17px] leading-[12px]">
+                    <div
+                        class=" text-white opacity-70 lg:text-[18px] md:text[14.4px] sm:text-[11.5px] text-[9px] font-serif ">
+                        <i>
+                            Html | CSS | JavaScript | Seeking Internship Opportunity 🎯 </i>
+                    </div>
+                </div>
+                <!-- button -->
+                <!-- hireme button -->
+                <div class="flex lg:gap-10 md:gap-9 sm:gap-8 gap-6 lg:mt-14 md:mt-10 sm:mt-6 mt-4 cursor-pointer">
+                    <!-- download resume -->
+                    <div
+                        class=" flex justify-center items-center hover:bg-white bg-blue-700 duration-[1.5s] gap-1 lg:rounded-[10px] md:rounded-[8px] sm:rounded-md rounded-md lg:border-[3px] sm:border-[1px] border-[1px] border-blue-700 hover:border-blue-700 group lg:h-16 md:h-12 sm:h-10 h-8 lg:w-36 md:w-28 sm:w-20 w-16">
+
+                        <button
+                            class="lg:text-[18px] md:text-[14px] sm:text-[12px] text-[8px] text-white group-hover:text-blue-600 font-sans font-bold">
+                            Resume
+                        </button>
+
+                        <button class="w-[9px] lg:w-[25px] md:w-[18px] sm:w-[12px]">
+                            <svg class="group-hover:fill-blue-700" xmlns="http://www.w3.org/2000/svg" height=""
+                                viewBox="0 0 512 512">
+                                <style>
+                                    svg {
+                                        fill: #ffffff
+                                    }
+                                </style>
+                                <path
+                                    d="M288 32c0-17.7-14.3-32-32-32s-32 14.3-32 32V274.7l-73.4-73.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l128 128c12.5 12.5 32.8 12.5 45.3 0l128-128c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L288 274.7V32zM64 352c-35.3 0-64 28.7-64 64v32c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V416c0-35.3-28.7-64-64-64H346.5l-45.3 45.3c-25 25-65.5 25-90.5 0L165.5 352H64zm368 56a24 24 0 1 1 0 48 24 24 0 1 1 0-48z" />
+                            </svg>
+                        </button>
+                    </div>
+
+
+
+
+                    <!-- <div
+                        class="bg-white hover:border-white hover:bg-black duration-[1.5s] lg:h-auto md:h-auto sm:h-10 h-8 lg:w-24 md:w-20 sm:w-18 w-16 lg:px-16 py-4 lg:rounded-[10px] md:rounded-[8px] sm:rounded-md rounded-md lg:border-[3px] sm:border-[1px] border-[1px] group justify-center items-center">
+                        <button
+                        class="lg:text-[18px] md:text-[14px] sm:text-[12px] text-[8px] text-black group-hover:text-white font-sans font-bold">
+                        Let Talk
+                    </button>
+                </div> -->
+
+
+                    <!-- lets connect button -->
+                    <div
+                        class=" flex justify-center items-center hover:bg-black bg-white duration-[1.5s] lg:rounded-[10px] md:rounded-[8px] sm:rounded-md rounded-md lg:border-[3px] sm:border-[1px] border-[1px] border-black hover:border-white group lg:h-16 md:h-12 sm:h-10 h-8 lg:w-36 md:w-28 sm:w-20 w-16">
+
+                        <button
+                            class="lg:text-[18px] md:text-[14px] sm:text-[12px] text-[8px] group-hover:text-white text-black font-sans font-bold">
+                            Lets Talk
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <!-- Left Side Section -->
+            <!-- <div class="max-w-[50%]"><img src="./img/Untitled.png" alt="" class="rounded-lg"></div> -->
+            <div class="lg:max-w-[40%] md:max-w-[50%] sm:max-w-[60%] w-[90%] mt-14 "><img
+                    src="Studio_Project_V2 (online-video-cutter.com)-4be1db21.gif" class="rounded-lg" alt="">
+            </div>
+
+    </main>
+
+
+    <!-- bl -->
+    <div
+        class="lg:mt-32 md:mt-36 sm:mt-28 mt-10 w-[100%] lg:h-[1px] md:h-[1px] sm:h-[0.7px] h-[0.5px] bg-blue-800 opacity-70">
+    </div>
+
+    <!-- About  -->
+    <main>
+        <p
+            class="lg:mt-20 md:mt-14 sm:mt-10 mt-10 font-bold lg:text-[70px] md:text-[60px] sm:text-[50px] text-[30px] flex justify-center">
+            <span class="text-gradient" id="aboutme-section">
+                ABOUT ME
+            </span>
+        </p>
+
+        <div class="flex justify-center">
+            <div
+                class="lg:mt-24 md:mt-14 sm:mt-6 mt-5 flex justify-center items-center lg:flex-nowrap md:flex-wrap sm:flex-wrap flex-wrap gap-9">
+
+                <!-- text -->
+                <div class="lg:w-[50%] md:w-[55%] sm:w-[60%] w-[70%] lg:mx-24 md:mx-16 sm:mx-10 mx-6">
+                    <p
+                        class=" lg:text-[18px] md:text-[18px] sm:text-[14px] text-[14px] lg:leading-6 md:leading-4 sm:leading-3 leading-2 text-white font-mono">
+                        Welcome to my portfolio! I'm
+                        Vivek
+                        Thapliyal, a dedicated and passionate frontend developer. With a creative mindset
+                        and a strong foundation in coding, I strive to create immersive and user-centric digital
+                        experiences. Born and raised in the bustling city of New Delhi, I've always been fascinated by
+                        technology's potential to transform ideas into tangible, interactive realities.
+                        <br><br>
+                        As a third-year BCA student at the esteemed GNIOT Group of Institutes, I've had the privilege of
+                        honing my technical skills while exploring the vast landscape of computer science. My journey
+                        into
+                        the world of web development began with HTML, CSS, and JavaScript, and over time, I've delved
+                        deep
+                        into the intricacies of these languages to craft seamless user interfaces.
+
+                    </p>
+                </div>
+
+                <!-- img -->
+                <div class="lg:w-[50%] md:w-[60%] sm:w-[70%] w-[80%] flex justify-center items-center">
+                    <img src="profile2-88d17fc2.jpg"
+                        class=" rounded-2xl mx-10 shadow-blue-800 mix-blend-hard-light lg:shadow-xl md:shadow-md sm:shadow-sm shadow-sm"
+                        alt="">
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Project -->
+    <main class="lg:mt-24 md:mt-20 sm:mt-14 mt-14">
+        <!-- line -->
+        <div class="w-100% lg:h-[1px] md:h-[0.8px] sm:h-[0.6px] h-[0.4px] bg-blue-400 opacity-60"></div>
+
+        <!-- project's -->
+        <p
+            class="lg:mt-20 md:mt-14 sm:mt-10 mt-10 font-bold flex justify-center  lg:text-[70px] md:text-[60px] sm:text-[50px] text-[30px]">
+            <span class="text-gradient">
+                PROJECT'S</span>
+        </p>
+
+        <!-- project1 -->
+        <div
+            class="lg:mt-24 md:mt-20 sm:mt-14 mt-12 lg:mb-24 md:mb-12 sm:mb-6 mb-4 lg:ml-24 md:ml-16 sm:ml-8 ml-4 lg:mr-56 md:mr-40 sm:mr-32 mr-16 relative flex justify-center">
+            <div class="group">
+                <img src="project1-a672b457.png" alt="" class="lg:rounded-3xl md:rounded-xl sm:rounded-lg rounded-xl lg:shadow-2xl md:shadow-xl sm:shadow-md shadow-sm group-hover:shadow-white duration-300 group-hover:scale-75  lg:group-hover:pr-14 md:group-hover:pr-10 sm:group-hover:pr-2 group-hover:pr-2 lg:group-hover:blur-sm md:group-hover:blur-[2px]
+                 sm:group-hover:blur-[1px] group-hover:blur-[1px]">
+
+                <!-- text -->
+                <div
+                    class="absolute lg:w-[500px] md:w-[400px] sm:w-[300px] w-[200px] bottom-[40%] left-[20%] opacity-0 group-hover:opacity-100 transition-all">
+                    <h1 class="lg:text-[24px] md:text-[16px] sm:text-[8px] text-[6px] text-blue-700 font-extrabold">
+                        Travel & Advanture</h1>
+                    <p
+                        class="lg:text-[16px] md:text-[12px] sm:text-[8px] text-[4px] text-white font-mono lg:w-[360px] md:w-[240px] sm:w-[160px] w-[100px]">
+                        Where you can do swimming, rafting,
+                        climbing, surfing, tracking by registering and make an plan.
+                    </p>
+
+                    <!-- icon's -->
+                    <div
+                        class="flex items-center absolute lg:gap-x-3 md:gap-x-2 sm:gap-x-1 gap-x-[3px] lg:pt-3 md:pt-2 sm:pt-1 pt-[2px]">
+                        <!-- read more -->
+                        <div
+                            class=" lg:text-[12px] md:text-[8px] sm:text-[4px] text-[2px] font-bold text-white hover:text-black bg-blue-600 hover:bg-white duration-[1.5s] border-blue-600 hover:border-white lg:px-4 md:px-2 sm:px-1 px-[2px] lg:py-2 md:py-2 sm:py-2 py-[2px] lg:rounded-[10px] md:rounded-[6px] sm:rounded-[4px] rounded-[2px] border-[1px] cursor-pointer">
+                            Read More</div>
+
+                        <a href="https:www.google.com">
+                            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGAAAABgCAYAAADimHc4AAAACXBIWXMAAAsTAAALEwEAmpwYAAAD2klEQVR4nO2dz2sTQRTHd2etehE8ehDx6ln8I/Si+BvEIuKPmzcvXnpzp60iSBWqBwtqxeBFa21FEFGxIhVnYn+kP8HGVktta5rGpk2TJ5NSEGyaTczujJvvB96pZOl735n3fbsJO5YFAAAAAAAAAAAAAEAp1PVsZJfFMZuLVuaKGHPlPOOSQhWunFe55XPkn46qnI1YJI4rDjEuRrQXiActiBh2uDior/KRiGNzeUV7IbjesF3ZaNURC7z+KL78QwRRr6Ht6F99zKBw6qMHgjNcVwzrTpiZFq4cDcSY1bSjPVluZjhu9IjvAtiufKA7UWZo2K6457sAzJWDuhNlpoYrYv4LwEVSe6Lc1BDJAATQnaQ0OiAAhwB/rQqHSzrdPkZd4ymaX8pSailLHyZSdLYjnv+b7qKFegeoAt/vnaVC3O+dDZUIxgmgVn4xatvGtBcutAK8H08VFeB1fF574UIrgOr3xZhbzGovXGgFUKYLATQK8O5r8Rb0Fi1IrwmfhAn7J4AaMVvXGUNbojMYQ/1sQSo21Mv8TZe6+VKmnFzM5ttObdtYqIpvpAlXW1gQQEIA3auQYQfoLwRDC1opgldYhT+/9VoPneuI08O+WYpNp2lmYZmyOaLJVIZ6pxboUewnne+M044bfeH2gKAFqKmP0sWXE5RIL3v63FI2R7fFNO28WRkhqlqALVc/0/PROSoHJdi+yCgEYGUKoO41OkfKK/4qy7kcnXr6b4/Gq3YHXHr1jSpBejlHu+8MQgBWogCql1cKZdqbGqLYAawEASrNiSdfIADTKICYXIAArEwBVPHcrkm68GKc6t58p7ahBC1kSm9Ru27FYMKlGmih7xbUnF/qiHrmWRwCeEWt7+OP1+/byljbhxOer6m+q8AY6pFI/6ynYm273uv5Lln9ogMCeGRPi/fZvenjD0/XHJhOQwCvbG70PrfvjYx6uubUrwwE8Nr/S2kV25v6PF03k81BAD8EULvFj+tW9bMg5sP/BQE4BMAO4GhBnkALggcQTJjDhDEF+Q3GUIn7gLWACcOECSbMYcIwYb+BCUuY8FrAhGHCBBPmMGGYsN9UkwlTGB5HV1tYEECGXQC8tI8VFiARxA4Y0L3NmbEh+n0XYOX9+boTlUaGzeVd3wVQhxfoTpQZGg6Xh30XwGrurmFcDOlOlhkXYiSwUzXUyRH6E5ZGhePK/VaQqJMjdCfNDAmbC24FTh0xm4sG3ckzE07P0HGEySrq5Ijq9AQxFHjbKUhzd406vEC9P1/NwuG8WRNJlZvKMT/tNHfX6C47AAAAAAAAAAAAALD+K34D/N9y8a+HtLgAAAAASUVORK5CYII="
+                                alt="linkedin" class="lg:w-10 md:w-6 sm:w-4 w-2">
+                        </a>
+                        <a href="https:www.google.com">
+                            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAACXBIWXMAAAsTAAALEwEAmpwYAAAD0UlEQVR4nO2aSWsVQRCAv4iiAcUVFMxBhRgVjfuuBwVxQT158KjiLijqQU+ieBC3aHD3JP4JDZoIblEEF7y6m4P7gnE3iRT0g8djxnT1TPc8YT4oCC8ztfTMdFdXNeTk5OTk5PhmBLAeOAU0Ao+BD8AvI/L3I/O/k8A6oIb/nHFAHdACdDjKS+AwMJb/hApgCdCcIOg4uQksNjbKkinAHQ+Bl8ptYBJlRCVwDGgLEHxBxFY90CPr4GuABwEDL5V7QHVWwU8F3mUYfEFkBZkVOviFwLcyCL4gX4EFoYKfBrSWQdCl8i3Em1ADfCyDYOPkvc85odJiwmsC9gANwI8UA/sOXDS6L3Vy7V1fq8NxC0dXFl0/ENgFvE4Q+CtgK9C7SO8yi/uO+khy2iwMD4+4ty9w3iH4c0CfCH3VFvf+ASakFXyFIsMrflKlbAZOAyuA8cBg81mJVJnfVphr5No4+lr60pxW2rxE8dS64p+uCn9kuU5Ms8JgP/zTW+HPjTS2tB0KkX2/b4YofapNYqxOaWw5/pmr9OlgEmMtCkPtaX1znTDH2LL163mSrK9DIfsJx2Glb07Z4XrlKHcnHJLpvVD4t9bFyCmFgTWER/OATrgYaLJULjl/L8LTU7HfkP2DmqeWyi+QHQ2WPkoZXs17S+UHyI5Dlj6+dVH+01K57NayYrviM1Xzy1L5Nsp/AORhqvlUhuu/6ycghVNvk2Aj2XHF5yTYZKn8N9Cf8Awwtm18vOxi4KylcpF9hOeAwj9J6tSsURYtRxOOWmXRdZWLkdEKA4X9gJS5fFNl2uYa30a6GnuiNNRiGie+mAg8U/okk7kz9UpjhTW3LuXymOg6oshNikXuc2a8g8GCfDYVXnkjujjYlnumA2eMLlc/EpXEhFsRSj+a0rU0S75YOCH7itXYs1axF/mXXCcFlkYobjdLXxfTDHlpcapDUzCpjBl4rSxKYwAqTABRBnYXfSpxm6d2U13WMs50eFyDl3J+akyOaY1J0IPMNRtjHJF01fd+v1T+mBUjVepjjO0oumZvRMV2ZwKbmxwHQFYhL4XI+xHGHpb04CabNFWc2JBwnzDf8dyQtwJtdcy5IM0Mr2GSMvi3IQ5NzTK5f+mymHi9jWCi8ojMDAIxzxxMKnZAkpUtJS3ybglfR9sBaDUts6DMNq9c1Mrw1DQufiacjW0G4A0wk4wYZnFuyOcAyIQ3lIzpYXp1bQEHoM10fUO24zpFzuRcCzAAtz1vuRNRYfLv6x4G4Gqg9ntqjDGfxqgEOkaZ0nfIcpsXXOsBOTk5OTk5+OMvJumzTKKLQPIAAAAASUVORK5CYII="
+                                alt="Github" class="lg:w-10 md:w-6 sm:w-4 w-2">
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- project2 -->
+        <div
+            class="lg:mt-56 md:mt-40 sm:mt-32 mt-10 lg:mr-14 md:mr-10 sm:mr-6 mr-4 lg:ml-56 md:ml-40 sm:ml-32 ml-16 relative flex justify-center">
+            <div class="group">
+                <img src="project22-c075f3e6.jpg" alt="" class="lg:rounded-3xl md:rounded-xl sm:rounded-lg rounded-xl lg:shadow-2xl md:shadow-xl sm:shadow-md shadow-sm group-hover:shadow-blue-500 duration-300 group-hover:scale-75 lg:group-hover:pl-14 md:group-hover:pl-10 sm:group-hover:pl-2 group-hover:pl-1 lg:group-hover:blur-sm md:group-hover:blur-[2px]
+                 sm:group-hover:blur-[1px] group-hover:blur-[1px]">
+
+                <!-- text -->
+                <div
+                    class="absolute lg:w-[500px] md:w-[400px] sm:w-[300px] w-[200px] bottom-[40%] left-[29%] opacity-0 group-hover:opacity-100 transition-all">
+                    <h1 class="lg:text-[24px] md:text-[16px] sm:text-[8px] text-[6px] text-black font-extrabold">
+                        DISCORD CLONE</h1>
+                    <p
+                        class="lg:text-[16px] md:text-[12px] sm:text-[8px] text-[4px] text-white font-mono lg:w-[360px] md:w-[240px] sm:w-[160px] w-[100px]">
+                        It's an DISCORD Clone website by using of
+                        HTML & Tailwind CSS.
+                    </p>
+
+                    <!-- icon's -->
+                    <div
+                        class="flex items-center absolute lg:gap-x-3 md:gap-x-2 sm:gap-x-1 gap-x-[3px] lg:pt-3 md:pt-2 sm:pt-1 pt-[2px]">
+                        <!-- read more -->
+                        <div
+                            class=" lg:text-[12px] md:text-[8px] sm:text-[4px] text-[2px] font-bold text-white hover:text-black bg-black hover:bg-white duration-[1.5s] border-black hover:border-white lg:px-4 md:px-2 sm:px-1 px-[2px] lg:py-2 md:py-2 sm:py-2 py-[2px] lg:rounded-[10px] md:rounded-[6px] sm:rounded-[4px] rounded-[2px] border-[1px] cursor-pointer">
+                            Read More</div>
+
+                        <a
+                            href="https://www.linkedin.com/posts/vivek-thapliyal-19-vk_html5-css-tailwindcss-activity-7053358876066234368-rwBZ?utm_source=share&utm_medium=member_desktop">
+                            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGAAAABgCAYAAADimHc4AAAACXBIWXMAAAsTAAALEwEAmpwYAAAD2klEQVR4nO2dz2sTQRTHd2etehE8ehDx6ln8I/Si+BvEIuKPmzcvXnpzp60iSBWqBwtqxeBFa21FEFGxIhVnYn+kP8HGVktta5rGpk2TJ5NSEGyaTczujJvvB96pZOl735n3fbsJO5YFAAAAAAAAAAAAAEAp1PVsZJfFMZuLVuaKGHPlPOOSQhWunFe55XPkn46qnI1YJI4rDjEuRrQXiActiBh2uDior/KRiGNzeUV7IbjesF3ZaNURC7z+KL78QwRRr6Ht6F99zKBw6qMHgjNcVwzrTpiZFq4cDcSY1bSjPVluZjhu9IjvAtiufKA7UWZo2K6457sAzJWDuhNlpoYrYv4LwEVSe6Lc1BDJAATQnaQ0OiAAhwB/rQqHSzrdPkZd4ymaX8pSailLHyZSdLYjnv+b7qKFegeoAt/vnaVC3O+dDZUIxgmgVn4xatvGtBcutAK8H08VFeB1fF574UIrgOr3xZhbzGovXGgFUKYLATQK8O5r8Rb0Fi1IrwmfhAn7J4AaMVvXGUNbojMYQ/1sQSo21Mv8TZe6+VKmnFzM5ttObdtYqIpvpAlXW1gQQEIA3auQYQfoLwRDC1opgldYhT+/9VoPneuI08O+WYpNp2lmYZmyOaLJVIZ6pxboUewnne+M044bfeH2gKAFqKmP0sWXE5RIL3v63FI2R7fFNO28WRkhqlqALVc/0/PROSoHJdi+yCgEYGUKoO41OkfKK/4qy7kcnXr6b4/Gq3YHXHr1jSpBejlHu+8MQgBWogCql1cKZdqbGqLYAawEASrNiSdfIADTKICYXIAArEwBVPHcrkm68GKc6t58p7ahBC1kSm9Ru27FYMKlGmih7xbUnF/qiHrmWRwCeEWt7+OP1+/byljbhxOer6m+q8AY6pFI/6ynYm273uv5Lln9ogMCeGRPi/fZvenjD0/XHJhOQwCvbG70PrfvjYx6uubUrwwE8Nr/S2kV25v6PF03k81BAD8EULvFj+tW9bMg5sP/BQE4BMAO4GhBnkALggcQTJjDhDEF+Q3GUIn7gLWACcOECSbMYcIwYb+BCUuY8FrAhGHCBBPmMGGYsN9UkwlTGB5HV1tYEECGXQC8tI8VFiARxA4Y0L3NmbEh+n0XYOX9+boTlUaGzeVd3wVQhxfoTpQZGg6Xh30XwGrurmFcDOlOlhkXYiSwUzXUyRH6E5ZGhePK/VaQqJMjdCfNDAmbC24FTh0xm4sG3ckzE07P0HGEySrq5Ijq9AQxFHjbKUhzd406vEC9P1/NwuG8WRNJlZvKMT/tNHfX6C47AAAAAAAAAAAAALD+K34D/N9y8a+HtLgAAAAASUVORK5CYII="
+                                alt="linkedin" class="lg:w-10 md:w-6 sm:w-4 w-2">
+                        </a>
+                        <a href="https:www.google.com">
+                            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAACXBIWXMAAAsTAAALEwEAmpwYAAAD0UlEQVR4nO2aSWsVQRCAv4iiAcUVFMxBhRgVjfuuBwVxQT158KjiLijqQU+ieBC3aHD3JP4JDZoIblEEF7y6m4P7gnE3iRT0g8djxnT1TPc8YT4oCC8ztfTMdFdXNeTk5OTk5PhmBLAeOAU0Ao+BD8AvI/L3I/O/k8A6oIb/nHFAHdACdDjKS+AwMJb/hApgCdCcIOg4uQksNjbKkinAHQ+Bl8ptYBJlRCVwDGgLEHxBxFY90CPr4GuABwEDL5V7QHVWwU8F3mUYfEFkBZkVOviFwLcyCL4gX4EFoYKfBrSWQdCl8i3Em1ADfCyDYOPkvc85odJiwmsC9gANwI8UA/sOXDS6L3Vy7V1fq8NxC0dXFl0/ENgFvE4Q+CtgK9C7SO8yi/uO+khy2iwMD4+4ty9w3iH4c0CfCH3VFvf+ASakFXyFIsMrflKlbAZOAyuA8cBg81mJVJnfVphr5No4+lr60pxW2rxE8dS64p+uCn9kuU5Ms8JgP/zTW+HPjTS2tB0KkX2/b4YofapNYqxOaWw5/pmr9OlgEmMtCkPtaX1znTDH2LL163mSrK9DIfsJx2Glb07Z4XrlKHcnHJLpvVD4t9bFyCmFgTWER/OATrgYaLJULjl/L8LTU7HfkP2DmqeWyi+QHQ2WPkoZXs17S+UHyI5Dlj6+dVH+01K57NayYrviM1Xzy1L5Nsp/AORhqvlUhuu/6ycghVNvk2Aj2XHF5yTYZKn8N9Cf8Awwtm18vOxi4KylcpF9hOeAwj9J6tSsURYtRxOOWmXRdZWLkdEKA4X9gJS5fFNl2uYa30a6GnuiNNRiGie+mAg8U/okk7kz9UpjhTW3LuXymOg6oshNikXuc2a8g8GCfDYVXnkjujjYlnumA2eMLlc/EpXEhFsRSj+a0rU0S75YOCH7itXYs1axF/mXXCcFlkYobjdLXxfTDHlpcapDUzCpjBl4rSxKYwAqTABRBnYXfSpxm6d2U13WMs50eFyDl3J+akyOaY1J0IPMNRtjHJF01fd+v1T+mBUjVepjjO0oumZvRMV2ZwKbmxwHQFYhL4XI+xHGHpb04CabNFWc2JBwnzDf8dyQtwJtdcy5IM0Mr2GSMvi3IQ5NzTK5f+mymHi9jWCi8ojMDAIxzxxMKnZAkpUtJS3ybglfR9sBaDUts6DMNq9c1Mrw1DQufiacjW0G4A0wk4wYZnFuyOcAyIQ3lIzpYXp1bQEHoM10fUO24zpFzuRcCzAAtz1vuRNRYfLv6x4G4Gqg9ntqjDGfxqgEOkaZ0nfIcpsXXOsBOTk5OTk5+OMvJumzTKKLQPIAAAAASUVORK5CYII="
+                                alt="Github" class="lg:w-10 md:w-6 sm:w-4 w-2">
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- project3 -->
+        <div
+            class="lg:mt-56 md:mt-40 sm:mt-32 mt-10 lg:mb-24 md:mb-12 sm:mb-6 mb-6 lg:ml-24 md:ml-16 sm:ml-8 ml-4 lg:mr-56 md:mr-40 sm:mr-32 mr-16 relative flex justify-center">
+            <div class="group">
+                <img src="coc-46bad549.jpg" alt="" class="lg:rounded-3xl md:rounded-xl sm:rounded-lg rounded-xl lg:shadow-2xl md:shadow-xl sm:shadow-md shadow-sm group-hover:shadow-white duration-300 group-hover:scale-75  lg:group-hover:pr-14 md:group-hover:pr-10 sm:group-hover:pr-2 group-hover:pr-2 lg:group-hover:blur-sm md:group-hover:blur-[2px]
+                 sm:group-hover:blur-[1px] group-hover:blur-[1px]">
+
+                <!-- text -->
+                <div
+                    class="absolute lg:w-[500px] md:w-[400px] sm:w-[300px] w-[200px] bottom-[40%] left-[20%] opacity-0 group-hover:opacity-100 transition-all">
+                    <h1 class="lg:text-[24px] md:text-[16px] sm:text-[8px] text-[6px] text-red-500 font-extrabold">
+                        Cash of Clans</h1>
+                    <p
+                        class="lg:text-[16px] md:text-[12px] sm:text-[8px] text-[4px] text-white font-mono lg:w-[360px] md:w-[240px] sm:w-[160px] w-[100px]">
+                        I made an clone website of an game website, In this game you have to maintain your townhall.
+                    </p>
+
+                    <!-- icon's -->
+                    <div
+                        class="flex items-center absolute lg:gap-x-3 md:gap-x-2 sm:gap-x-1 gap-x-[3px] lg:pt-3 md:pt-2 sm:pt-1 pt-[2px]">
+                        <!-- read more -->
+                        <div
+                            class=" lg:text-[12px] md:text-[8px] sm:text-[4px] text-[2px] font-bold text-white hover:text-black bg-red-700 hover:bg-white duration-[1.5s] border-red-800 hover:border-white lg:px-4 md:px-2 sm:px-1 px-[2px] lg:py-2 md:py-2 sm:py-2 py-[2px] lg:rounded-[10px] md:rounded-[6px] sm:rounded-[4px] rounded-[2px] border-[1px] cursor-pointer">
+                            Read More</div>
+
+                        <a
+                            href="https://www.linkedin.com/posts/vivek-thapliyal-19-vk_html5-css-webdevelopment-activity-7054127479191404544-1-bf?utm_source=share&utm_medium=member_desktop">
+                            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGAAAABgCAYAAADimHc4AAAACXBIWXMAAAsTAAALEwEAmpwYAAAD2klEQVR4nO2dz2sTQRTHd2etehE8ehDx6ln8I/Si+BvEIuKPmzcvXnpzp60iSBWqBwtqxeBFa21FEFGxIhVnYn+kP8HGVktta5rGpk2TJ5NSEGyaTczujJvvB96pZOl735n3fbsJO5YFAAAAAAAAAAAAAEAp1PVsZJfFMZuLVuaKGHPlPOOSQhWunFe55XPkn46qnI1YJI4rDjEuRrQXiActiBh2uDior/KRiGNzeUV7IbjesF3ZaNURC7z+KL78QwRRr6Ht6F99zKBw6qMHgjNcVwzrTpiZFq4cDcSY1bSjPVluZjhu9IjvAtiufKA7UWZo2K6457sAzJWDuhNlpoYrYv4LwEVSe6Lc1BDJAATQnaQ0OiAAhwB/rQqHSzrdPkZd4ymaX8pSailLHyZSdLYjnv+b7qKFegeoAt/vnaVC3O+dDZUIxgmgVn4xatvGtBcutAK8H08VFeB1fF574UIrgOr3xZhbzGovXGgFUKYLATQK8O5r8Rb0Fi1IrwmfhAn7J4AaMVvXGUNbojMYQ/1sQSo21Mv8TZe6+VKmnFzM5ttObdtYqIpvpAlXW1gQQEIA3auQYQfoLwRDC1opgldYhT+/9VoPneuI08O+WYpNp2lmYZmyOaLJVIZ6pxboUewnne+M044bfeH2gKAFqKmP0sWXE5RIL3v63FI2R7fFNO28WRkhqlqALVc/0/PROSoHJdi+yCgEYGUKoO41OkfKK/4qy7kcnXr6b4/Gq3YHXHr1jSpBejlHu+8MQgBWogCql1cKZdqbGqLYAawEASrNiSdfIADTKICYXIAArEwBVPHcrkm68GKc6t58p7ahBC1kSm9Ru27FYMKlGmih7xbUnF/qiHrmWRwCeEWt7+OP1+/byljbhxOer6m+q8AY6pFI/6ynYm273uv5Lln9ogMCeGRPi/fZvenjD0/XHJhOQwCvbG70PrfvjYx6uubUrwwE8Nr/S2kV25v6PF03k81BAD8EULvFj+tW9bMg5sP/BQE4BMAO4GhBnkALggcQTJjDhDEF+Q3GUIn7gLWACcOECSbMYcIwYb+BCUuY8FrAhGHCBBPmMGGYsN9UkwlTGB5HV1tYEECGXQC8tI8VFiARxA4Y0L3NmbEh+n0XYOX9+boTlUaGzeVd3wVQhxfoTpQZGg6Xh30XwGrurmFcDOlOlhkXYiSwUzXUyRH6E5ZGhePK/VaQqJMjdCfNDAmbC24FTh0xm4sG3ckzE07P0HGEySrq5Ijq9AQxFHjbKUhzd406vEC9P1/NwuG8WRNJlZvKMT/tNHfX6C47AAAAAAAAAAAAALD+K34D/N9y8a+HtLgAAAAASUVORK5CYII="
+                                alt="linkedin" class="lg:w-10 md:w-6 sm:w-4 w-2">
+                        </a>
+                        <a href="https:www.google.com">
+                            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAACXBIWXMAAAsTAAALEwEAmpwYAAAD0UlEQVR4nO2aSWsVQRCAv4iiAcUVFMxBhRgVjfuuBwVxQT158KjiLijqQU+ieBC3aHD3JP4JDZoIblEEF7y6m4P7gnE3iRT0g8djxnT1TPc8YT4oCC8ztfTMdFdXNeTk5OTk5PhmBLAeOAU0Ao+BD8AvI/L3I/O/k8A6oIb/nHFAHdACdDjKS+AwMJb/hApgCdCcIOg4uQksNjbKkinAHQ+Bl8ptYBJlRCVwDGgLEHxBxFY90CPr4GuABwEDL5V7QHVWwU8F3mUYfEFkBZkVOviFwLcyCL4gX4EFoYKfBrSWQdCl8i3Em1ADfCyDYOPkvc85odJiwmsC9gANwI8UA/sOXDS6L3Vy7V1fq8NxC0dXFl0/ENgFvE4Q+CtgK9C7SO8yi/uO+khy2iwMD4+4ty9w3iH4c0CfCH3VFvf+ASakFXyFIsMrflKlbAZOAyuA8cBg81mJVJnfVphr5No4+lr60pxW2rxE8dS64p+uCn9kuU5Ms8JgP/zTW+HPjTS2tB0KkX2/b4YofapNYqxOaWw5/pmr9OlgEmMtCkPtaX1znTDH2LL163mSrK9DIfsJx2Glb07Z4XrlKHcnHJLpvVD4t9bFyCmFgTWER/OATrgYaLJULjl/L8LTU7HfkP2DmqeWyi+QHQ2WPkoZXs17S+UHyI5Dlj6+dVH+01K57NayYrviM1Xzy1L5Nsp/AORhqvlUhuu/6ycghVNvk2Aj2XHF5yTYZKn8N9Cf8Awwtm18vOxi4KylcpF9hOeAwj9J6tSsURYtRxOOWmXRdZWLkdEKA4X9gJS5fFNl2uYa30a6GnuiNNRiGie+mAg8U/okk7kz9UpjhTW3LuXymOg6oshNikXuc2a8g8GCfDYVXnkjujjYlnumA2eMLlc/EpXEhFsRSj+a0rU0S75YOCH7itXYs1axF/mXXCcFlkYobjdLXxfTDHlpcapDUzCpjBl4rSxKYwAqTABRBnYXfSpxm6d2U13WMs50eFyDl3J+akyOaY1J0IPMNRtjHJF01fd+v1T+mBUjVepjjO0oumZvRMV2ZwKbmxwHQFYhL4XI+xHGHpb04CabNFWc2JBwnzDf8dyQtwJtdcy5IM0Mr2GSMvi3IQ5NzTK5f+mymHi9jWCi8ojMDAIxzxxMKnZAkpUtJS3ybglfR9sBaDUts6DMNq9c1Mrw1DQufiacjW0G4A0wk4wYZnFuyOcAyIQ3lIzpYXp1bQEHoM10fUO24zpFzuRcCzAAtz1vuRNRYfLv6x4G4Gqg9ntqjDGfxqgEOkaZ0nfIcpsXXOsBOTk5OTk5+OMvJumzTKKLQPIAAAAASUVORK5CYII="
+                                alt="Github" class="lg:w-10 md:w-6 sm:w-4 w-2">
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+
+    <!-- bl -->
+    <div class="w-100% lg:mt-36 md:mt-24 sm:mt-14 mt-10 h-[1px] bg-blue-400 opacity-60"></div>
+
+    <!-- skill -->
+    <main>
+        <p
+            class="lg:mt-20 md:mt-14 sm:mt-10 mt-10 font-bold lg:text-[70px] md:text-[60px] sm:text-[50px] text-[30px] flex justify-center">
+            <span class="text-gradient" id="aboutme-section">
+                <span class="lg:text-[89px] md:text-[69px] sm:text-[59px] text-[49px]">
+                    MyTech Stack
+                </span>
+        </p>
+
+        <div class="flex items-center">
+
+            <div
+                class="flex lg:justify-between md:justify-between sm:justify-center justify-center items-center lg:flex-nowrap md:flex-wrap sm:flex-wrap flex-wrap lg:mx-24 md:mx-16 sm:mx-12 mx-4">
+
+                <!-- text  -->
+                <div class="lg:mt-24 md:mt-14 sm:mt-12 mt-10 lg:w-[50%] md:w-[50%] sm:w-[60%] w-[70%]">
+                    <p
+                        class="lg:text-[18px] md:text-[18px] sm:text-[16px] text-[16px] lg:leading-6 md:leading-4 sm:leading-6 leading-6 text-white font-mono">
+                        My journey as a frontend developer has equipped me with a diverse set of skills that enable me
+                        to
+                        create engaging and user-friendly digital experiences. Here are
+                        some of the key skills that define my expertise:
+                        <br> <br>
+                        <span class="text-blue-600 font-bold">HTML & CSS</span>: Proficient in creating visually
+                        appealing
+                        and structured web content.
+                        <span class="text-blue-600 font-bold">JavaScript</span>: Skilled in enhancing user interfaces
+                        with
+                        interactive features.
+                        <span class="text-b;ue-600 font-bold">React</span>: Experienced in building dynamic and
+                        responsive
+                        web applications.
+                        <span class="text-blue-600 font-bold">Responsive Design</span>: Adept at ensuring seamless
+                        functionality across devices.
+                        <span class="text-blue-600 font-bold">User-Centric Design</span>: Prioritizing intuitive and
+                        user-friendly interfaces.
+                        <span class="text-blue-600 font-bold">Version Control (Git)</span>: Capable of collaborating
+                        effectively within teams.
+                        These skills combine to drive my passion for delivering top-notch frontend solutions that
+                        captivate
+                        users and elevate digital experiences.
+
+
+                    </p>
+                </div>
+
+                <!-- img -->
+                <div
+                    class="lg:mt-24 md:mt-14 sm:mt-12 mt-16 lg:w-[25%] md:w-[60%] sm:w-[70%] w-[80%] flex justify-center items-center flex-wrap ">
+                    <!-- skill -->
+                    <div class="flex items-center">
+
+                        <div class="flex flex-row justify-center gap-8 items-center flex-wrap">
+                            <!-- html logo -->
+                            <img src="html-25319599.png" alt=""
+                                class="w-[80px] px-1 py-1 bg-black rounded-2xl hover:scale-125 shadow-md hover:shadow-orange-600 duration-200">
+                            <!-- css logo -->
+                            <img src="CSS-6c971c6d.png" alt=""
+                                class="w-[80px] px-1 py-1 mix-blend-hard-light bg-black rounded-2xl hover:scale-125 shadow-md hover:shadow-blue-400 duration-200">
+                            <!-- javascript logo -->
+                            <img src="Javascript-da6c64ba.svg" alt=""
+                                class="w-[80px] px-1 py-1 mix-blend-hard-light bg-black rounded-2xl hover:scale-125 shadow-md hover:shadow-yellow-400 duration-200">
+                            <!-- nextjs logo -->
+                            <img src="Next-38e9550d.svg" alt=""
+                                class="w-[90px] px-1 py-2 bg-white rounded-2xl hover:scale-125 shadow-md hover:shadow-white duration-200">
+                            <!-- react logo -->
+                            <img src="React-65d00e81.png" alt=""
+                                class="w-[90px] px-1 py-1  bg-slate-900 rounded-2xl hover:scale-125 shadow-md hover:shadow-cyan-500 duration-200">
+                            <!-- tailwind logo -->
+                            <img src="tailwind-logo-a28f495d.png" alt=""
+                                class="w-[80px] px-1 py-1 mix-blend-hard-light bg-black rounded-2xl hover:scale-125 shadow-md hover:shadow-white duration-200">
+                            <!-- github logo -->
+                            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAACXBIWXMAAAsTAAALEwEAmpwYAAAD0UlEQVR4nO2aSWsVQRCAv4iiAcUVFMxBhRgVjfuuBwVxQT158KjiLijqQU+ieBC3aHD3JP4JDZoIblEEF7y6m4P7gnE3iRT0g8djxnT1TPc8YT4oCC8ztfTMdFdXNeTk5OTk5PhmBLAeOAU0Ao+BD8AvI/L3I/O/k8A6oIb/nHFAHdACdDjKS+AwMJb/hApgCdCcIOg4uQksNjbKkinAHQ+Bl8ptYBJlRCVwDGgLEHxBxFY90CPr4GuABwEDL5V7QHVWwU8F3mUYfEFkBZkVOviFwLcyCL4gX4EFoYKfBrSWQdCl8i3Em1ADfCyDYOPkvc85odJiwmsC9gANwI8UA/sOXDS6L3Vy7V1fq8NxC0dXFl0/ENgFvE4Q+CtgK9C7SO8yi/uO+khy2iwMD4+4ty9w3iH4c0CfCH3VFvf+ASakFXyFIsMrflKlbAZOAyuA8cBg81mJVJnfVphr5No4+lr60pxW2rxE8dS64p+uCn9kuU5Ms8JgP/zTW+HPjTS2tB0KkX2/b4YofapNYqxOaWw5/pmr9OlgEmMtCkPtaX1znTDH2LL163mSrK9DIfsJx2Glb07Z4XrlKHcnHJLpvVD4t9bFyCmFgTWER/OATrgYaLJULjl/L8LTU7HfkP2DmqeWyi+QHQ2WPkoZXs17S+UHyI5Dlj6+dVH+01K57NayYrviM1Xzy1L5Nsp/AORhqvlUhuu/6ycghVNvk2Aj2XHF5yTYZKn8N9Cf8Awwtm18vOxi4KylcpF9hOeAwj9J6tSsURYtRxOOWmXRdZWLkdEKA4X9gJS5fFNl2uYa30a6GnuiNNRiGie+mAg8U/okk7kz9UpjhTW3LuXymOg6oshNikXuc2a8g8GCfDYVXnkjujjYlnumA2eMLlc/EpXEhFsRSj+a0rU0S75YOCH7itXYs1axF/mXXCcFlkYobjdLXxfTDHlpcapDUzCpjBl4rSxKYwAqTABRBnYXfSpxm6d2U13WMs50eFyDl3J+akyOaY1J0IPMNRtjHJF01fd+v1T+mBUjVepjjO0oumZvRMV2ZwKbmxwHQFYhL4XI+xHGHpb04CabNFWc2JBwnzDf8dyQtwJtdcy5IM0Mr2GSMvi3IQ5NzTK5f+mymHi9jWCi8ojMDAIxzxxMKnZAkpUtJS3ybglfR9sBaDUts6DMNq9c1Mrw1DQufiacjW0G4A0wk4wYZnFuyOcAyIQ3lIzpYXp1bQEHoM10fUO24zpFzuRcCzAAtz1vuRNRYfLv6x4G4Gqg9ntqjDGfxqgEOkaZ0nfIcpsXXOsBOTk5OTk5+OMvJumzTKKLQPIAAAAASUVORK5CYII="
+                                alt=""
+                                class="w-[80px] px-1 py-1 bg-white rounded-2xl mix-blend-hard-light hover:scale-125 shadow-md hover:shadow-white duration-200">
+                            <!-- c logo -->
+                            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJcAAACnCAMAAAArOz7mAAAAwFBMVEX///9lmtIARIIAWZwAQoFhmNFdltBYk88AP4AAPH4AM3oAMXkAV5sAN3z1+PwAL3iWt97G1+x9qNiLsNu0y+cAKXYAJXTd5/RMjc3r8fhzotXW4vIAUpfP3e8ASokAHnHe4+qiv+EATZaBk7IAGXBcc53S2eNAerYAOo44WI2Xpr91i60kT4i2vs89YZLH0N1vgaZUZZWmtcl1jrhSh8ArbKxOfK86bqeOp8a1xNthgrEAR5SAlrwlWJUzZJ4AQZJJPIdEAAAJpklEQVR4nMWcDXeiOhCGBQkBLfiBitjaxVp0pVo/1n7ebff//6sL2loVkpmE0L7n7Ll7zyn6mLwzmZnYrVTUKOh4Ghk0W4Gi11OjYKRRU9OISQedn2b5ktshJtH2IqY2dH8aaK/WgH5S7dRvX/40UiK/bZ5QJTKJ99M285v9c6odWX/0k2TuiNAcqlQ/GABuh2a28HjNfigAWm3WWn2GJvW+PwB8zzT5WLsAaH6vzfxRH6bakfU730jW0XBUqeig9T1Qbovw7J5RErLDb8AaeoDd88iaZQcAyu5ZmWapARCMqAzVnqxTWjbrDIS38EukpABI7E5F7J5Lpj4AfHG7Z2XSpq+UKvCkjZUhU2eztB5VQpWKaqoCoDMoaKxzMiUBMFRMlYj0B0XzbCCXRyEVzLNBU5Hdc8ioNJnb0RTkBqaSSlsqAFoDfNlANELMVCT5G/ohU8Jml+3cRidHJqWUDNqe5zWTP+0BSf4fu/v9tliexdk9WSPaN5udoe8HgbtXEPj+sNM0+zRdO/hDaQJ5Nhhh1iohb4+YLY87HLU1zLrhW02M3Qntey1oD/yWRxHJD5dnh4jaPfkJZDsRdAbw6yWnHBQAQw/eQpN6IgdJC3Pm81tNtwkf0Gbf88Xyjut7cFeXtJqsVw068ONJDy1TQSXVG7wNjFYTUyVTTbYUaCGCibazs5ZLRNlgmiNJqlQjOCUmlfapzS7zx1jnH6dYdXIJDVpSsv5Rq+mOEPUoKV4Bu01ENjPJ6ON9LjFlg0lUFJktTEFOBzv/B5ghCJz5cLrEvBkZJCvmehistqo2PoBNZk5v/iSfALGJ1FPYXAGNKJlWry5uJkn4wqulsOdL3c97x231olqt3jxXBjCWp5AqFds524eraqqLxwqcTduqBzFuOx+MPOwWa6cKjKWYKlUeGJleHahgLlMrY6CWk5s+txDHRRTlrXNdnr0Pfbi4qApw9csaJrf6x5syPVkrmIs2S8KqVJpfaWxavTjH4nMR5aH4Jbf9kQm21assFp+Lljne3h8023NjIbhokTIQ1ohq5kPeWgFcu2O9RLmDPGPBXKZQLLqB7/uByCcZPmWiEMNF0Ineb43atL8XbY/APnynyd/fzMXicvWRpu94Gj1qKYhJNQ++Q36u3nCoOFwmKnUFI0ozcxtCKOUOQ9yXGz4Vh4tglos9YqEae82Wr//xtpDLRRBFV8CbKBLWiR/+ueL4HeKi8FVOB6rAac6SBc//QVvI5wKxRmAzSLKJ+eXpBtxCHlfeRz0R1D58vMxpw7J8go3F5SImlIOQ12v0yKbB3xuEsbhcJtSYNbGT/UOl5D7fsM5CAS5gG0HLH4HtX2rzjrI7wKXxtzEQuMoiNEkXk0ek3flcZMDFcuGe8+TFwr+/8cbicQFnUEfoMivpCsW2kM3V5ybVQIRKm+bXo3Jc3J5xJHDLNn0Q3kE2F79QdfHXbPSBXZBKcPHthXYXu3iX5OIfQtwx0ZE4xbvsevEKex918Um2hagY/uKF4xDj+q2s3XlchJvtEfNFwuhVi3INeGliAG2jKZmxCnL1sw+cKDGWAqxcf/GmJS6fa/tWIDeAXJzlCnhc5oMaKAkun81FlBhLlouZJh4LZqyCXIz12r4Z+vUPcuX7i77bhp7oulx/icbj07Wlf0gVWPH8RabWgUodWeF8v32z9VMpsVnB89F8Nww9IwU2K1RPmE9WDlUio/CaFam/ptdWLpWK3ZSvV7fX58Y6U6ESTLa+p7nGOtvMAjaT6IfILjdAVAVtJtU/TqEtPLKZ5JrJ9NtvqMU6kEkVijLzidgRwNJ161VwxsTkguY5M05+yGLN3PDPP9Elk5p/hV38RhrdMH3iETMcB7mgeWFcQ3PV4v0jy0ehNZOcr95hwWp3h91/uRAYGsrOo6M6CqseHT/0jA8A6fl91EBgNaLTdQ///kPaTP6+464GHkRfm/hFhrodKnQ/FNf56cKqx3mPvbxiAqDIfVo4d9hLZjnzkPHcyzscAIXuH91YbzAKw4Yes0PahQOg4H1tOO7WM6elYdW6Y9Zi7RU8/+YPMorfb8fRvOEc2AzLacyjXGOdkf3lBgCby3zFcVUqk8X4vnH7q9fr/bpt3I8XE9xjy1cZrqnubLBgu88fTiaTUOjLYhtOccbgSrvCpBAQeRdhuTOb3Z3k119vu+K9Ni6Va5yesdcMshwu88n+cHF3WSLWsrsPlPzNzHJNvxp7676839YN7g+nRR7ZOdf2+jgd1Valca2OK6XsZp5y0fezJNlblIS16J3m4nOyE653PXOqGOVYbJk9vljfxyRTPac+sJmnbxGF82wDapyQHbi2b/lVi7NWn8XcdX6ndxQAH9+PTvIoq2RRD8bCOl6zSvp1TfMpa6wv1SL4rYQU8ZqWXQBcPKbjGe4cKwVbKf3+/QropRKym7jiTzMD0pwVU5dfA7iTur66CpP+AdFx1dahIqxwjeg89wcz5idtRXlsaSAmVPX17meDqAePG2xLReZfWDCW0Tu4ZsFrbD5/vFHY/e6K0aUcv40zP1oAN7bBLlWv3xfby+U96GSjZsenIRbeOczM+inLHssvmTu2oamZYTt3YebBSeSA47b6XNZlizm4WJazyu9YlhY4b7PqkcxmTiJgZpDO7yz2K2/moM3sXrQU/P3aZdSDwtCozbndVziug5Hs1FYiu7lY1cA5sd0A+vM0mzngh7OteYz8/e14boHxZNuoc24ZNUAzGPVetAH2011uol4dvK6xGljLugu7jjgB6vp6zEZbjtc67AndqNsLAbvGM8xg13K6t3YUL9MBQPDxzymEk8kyjuzbLpx1EtVmiBHLscK7Lu4OyLBr3YY+W0dRtEr+rGd6o1sDLbWX3c3JoyBZZKNvpwzLsuxUyX/RVw6J3cWpUi0whYaskrJBukJxNzZcaMhROfamUHky1sUuz3By9AIVwF7h6hZtM6Ts21VYkCrVBD4BRGQ5EXLQCWpzDxeaSBmNmdB4lK+knkWmJIDKtjljfRkFY7t4ADj2WP2gbxn9Erk+zsr6pcxYZ2Rr1JnHoHLWpU1r3Q3rPgiS0bgulkchsljmBEiyu2K7ZxXeIaqqU9l1ibJBXJMZWM8ey2rMyrF7Vos13J1/qjYra6Sdo2Dj4L6o4HQ33/sv6QZ3iEIjKRu+/5+RnqwAm1kNRl9fstzJvMYms2rzH6HaaTNj3rurLBvEFcTdHJsZThfZj5cnd5UZmdqW0sG6rCZR99hmVldqFFWC3OX8UGhYzlxwDFWq4lkvKWgNuyfa15etYLGaG/PVQpXd/wc9+u4PssoZEgAAAABJRU5ErkJggg=="
+                                alt=""
+                                class="w-[70px] px-1 py-1 bg-white rounded-2xl mix-blend-hard-light hover:scale-125 shadow-md hover:shadow-blue-500 duration-200">
+                            <!-- c++ logo -->
+                            <img src="logo-c-for-quiz-5e257fe8.jpg" alt=""
+                                class="w-[92px] px-1 py-1 rounded-2xl mix-blend-hard-light hover:scale-125 shadow-md hover:shadow-blue-700 duration-200">
+                            <!-- mongodb logo -->
+                            <img src="MongoDB-2bfdd8bc.svg" alt=""
+                                class="w-[78px] px-1 py-1 bg-white rounded-2xl mix-blend-hard-light hover:scale-125 shadow-md hover:shadow-green-400 duration-200">
+                        </div>
+                        <div class="absolute -z-10 opacity-10 animate-bounce">
+                            <img src="blob vector-42c42963.png" width="350px" alt="">
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- contact-me section -->
+    <div class="mt-[65px] w-100% h-[1px] bg-blue-400 opacity-60"></div>
+    <section>
+        <div class="mt-[70px] flex justify-center" id="contactme-section">
+            <div>
+                <p class="text-gradient lg:text-[70px] md:text-[60px] sm:text-[50px] text-[38px] font-bold">Contact-Me
+                </p>
+                <p class="text-white lg:text-[35px] md:text-[28px] sm:text-[22px] text-[18px] font-semibold leading-7 ">
+                    Question, Thought, Or Just Want To
+                    <span class="text-blue-600">Say Hello?</span>
+                </p>
+            </div>
+        </div>
+
+        <div class="flex justify-center items-center mt-5 ">
+            <div class="lg:mx-[40%] md:mx-[20%] sm:mx-[10%] sm:ml-[40px] ml-[50px]">
+                <input type="text" name="name" id="name" placeholder="Enter your Name"
+                    class="w-[25rem] h-[35px] pl-4 my-3 rounded-md shadow-gray-700 shadow-lg">
+                <input type="email" name="email" id="name" placeholder="Enter your Email"
+                    class="w-[25rem] h-[35px] pl-4 rounded-md my-3 shadow-gray-700 shadow-lg">
+                <input type="text" name="Subject" id="name" placeholder="Enter your Subject"
+                    class="w-[25rem] h-[35px] pl-4 rounded-md my-3 shadow-gray-700 shadow-lg">
+                <textarea name="text" id="" cols="30" rows="10"
+                    class="w-[25rem] rounded-md my-3 shadow-gray-700 shadow-lg"
+                    placeholder="Enter your message"></textarea>
+            </div>
+        </div>
+
+        <div class="flex justify-center mt-[20px] mb-[90px]">
+            <div
+                class="w-[300px] h-[40px] cursor-pointer flex justify-center items-center px-20 py-2  gap-[7px] rounded-lg hover:bg-white bg-blue-600 duration-700 group">
+                <button type="submit" class="text-white font-semibold group-hover:text-blue-500">Submit
+                </button>
+
+                <button class="">
+                    <svg class="group-hover:fill-blue-500" xmlns="http://www.w3.org/2000/svg" height="1em"
+                        viewBox="0 0 512 512">
+                        <path
+                            d="M498.1 5.6c10.1 7 15.4 19.1 13.5 31.2l-64 416c-1.5 9.7-7.4 18.2-16 23s-18.9 5.4-28 1.6L284 427.7l-68.5 74.1c-8.9 9.7-22.9 12.9-35.2 8.1S160 493.2 160 480V396.4c0-4 1.5-7.8 4.2-10.7L331.8 202.8c5.8-6.3 5.6-16-.4-22s-15.7-6.4-22-.7L106 360.8 17.7 316.6C7.1 311.3 .3 300.7 0 288.9s5.9-22.8 16.1-28.7l448-256c10.7-6.1 23.9-5.5 34 1.4z" />
+                    </svg>
+                </button>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- footer section -->
+    <div class="mt-[100px] bg-slate-900 w-[100%] h-[1px]"></div>
+    <footer class="my-12 flex justify-center">
+        <div class="w-[1400px] lg:flex-row md:flex sm:flex-col flex-col justify-between items-center mx-10">
+
+            <!-- link section -->
+            <div class="flex gap-5 cursor-pointer">
+                <!-- github -->
+                <a href="https://github.com/vivekthapliyal20">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="25px"
+                        viewBox="0 0 496 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                        <style>
+                            svg {
+                                fill: #ffffff
+                            }
+                        </style>
+                        <path
+                            d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z" />
+                    </svg>
+                </a>
+
+                <a href="https://www.linkedin.com/in/vivek-thapliyal-19-vk/">
+                    <!-- linkedin -->
+                    <svg xmlns="http://www.w3.org/2000/svg" height="25px"
+                        viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                        <style>
+                            svg {
+                                fill: #ffffff
+                            }
+                        </style>
+                        <path
+                            d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z" />
+                    </svg>
+                </a>
+
+                <a href="https://www.instagram.com/dank_vwake/">
+                    <!-- twitter -->
+                    <svg xmlns="http://www.w3.org/2000/svg" height="25px"
+                        viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                        <style>
+                            svg {
+                                fill: #ffffff
+                            }
+                        </style>
+                        <path
+                            d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z" />
+                    </svg>
+                </a>
+
+                <a href="https://github.com/vivekthapliyal20">
+                    <!-- instagram -->
+                    <svg xmlns="http://www.w3.org/2000/svg" height="25px"
+                        viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                        <style>
+                            svg {
+                                fill: #ffffff
+                            }
+                        </style>
+                        <path
+                            d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z" />
+                    </svg>
+                </a>
+            </div>
+
+            <div class="mt-5">
+                <p class="text-white font-mono text-[16px] ">Copyright © 2022 Dank-Vwake Portfolio | All Rights Reserved
+                </p>
+            </div>
+        </div>
+    </footer>
+
+</body>
+
+</html>
